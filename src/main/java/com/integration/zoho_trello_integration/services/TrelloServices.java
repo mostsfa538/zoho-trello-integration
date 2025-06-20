@@ -21,6 +21,12 @@ public class TrelloServices {
     @Value("${trello.access.token}")
     private String accessToken;
 
+    /**
+     * Retrieves the board ID for a given board name.
+     * 
+     * @param boardName the name of the Trello board
+     * @return the ID of the board if found, otherwise null
+     */
     public String getBoardId(String boardName) {
         String url = "https://api.trello.com/1/members/me/boards?key=" + apiKey + "&token=" + accessToken;
 
@@ -58,6 +64,13 @@ public class TrelloServices {
         }
     }
 
+    /**
+     * Creates a new Trello board with the specified name.
+     * If the board already exists, it returns true without creating a new one.
+     * 
+     * @param boardName the name of the board to create
+     * @return true if the board was created or already exists, false otherwise
+     */
     public boolean createBoard(String boardName) {
         String boardId = getBoardId(boardName);
         if (boardId != null) {
@@ -92,6 +105,13 @@ public class TrelloServices {
         return false;
     }
 
+    /**
+     * Creates lists on the specified Trello board.
+     * If the list is "To_Do", it also creates initial cards in that list.
+     * 
+     * @param name the name of the list to create
+     * @param boardId the ID of the board where the list will be created
+     */
     public void createLists(String name, String boardId) {
         String url = "https://api.trello.com/1/lists?name=" + name +
                      "&idBoard=" + boardId +
@@ -127,6 +147,12 @@ public class TrelloServices {
         }
     }
 
+    /**
+     * Creates a new card in the specified Trello list.
+     * 
+     * @param cardName the name of the card to create
+     * @param listId the ID of the list where the card will be created
+     */
     public void createCard(String cardName, String listId) {
         String url = "https://api.trello.com/1/cards?name=" + cardName +
                      "&desc=" + cardName +

@@ -25,10 +25,20 @@ public class IntegrationService {
     @Autowired
     private TrelloServices trelloServices;
 
+
+    /**
+     * Constructor for IntegrationService.
+     * 
+     * @param tokenService the TokenService to be used for fetching access tokens
+     */
     public IntegrationService(TokenService tokenService) {
         this.tokenService = tokenService;
     }
 
+    /**
+     * Scheduled method to integrate Zoho CRM with Trello.
+     * This method fetches data from Zoho CRM and processes it to create Trello boards.
+     */
     @Scheduled(fixedRate = 60000)
     public void integrateZoho() {
         try {
@@ -44,6 +54,11 @@ public class IntegrationService {
         }
     }
 
+    /**
+     * Fetches data from Zoho CRM using the access token.
+     * 
+     * @return JSON response from Zoho CRM or null if an error occurs
+     */
     public String fetchZohoData() {
         String zohoApiUrl = "https://www.zohoapis.com/crm/v2/Deals";
         
@@ -77,6 +92,11 @@ public class IntegrationService {
         }
     }
 
+    /**
+     * Processes the response data from Zoho CRM to filter deals and create Trello boards.
+     * 
+     * @param responseData JSON response data from Zoho CRM
+     */
     public void filteredResponse(String responseData) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

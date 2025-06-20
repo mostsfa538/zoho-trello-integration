@@ -37,6 +37,11 @@ public class TokenService {
 
     private String accessToken;
 
+    /**
+     * Retrieves the access token, refreshing it if necessary.
+     * 
+     * @return the current access token
+     */
     public String getAccessToken() {
         if (accessToken == null || accessToken.isEmpty()) {
             accessToken = refreshAcessToken();
@@ -44,6 +49,11 @@ public class TokenService {
         return accessToken;
     }
     
+    /**
+     * Refreshes the access token using the refresh token.
+     * 
+     * @return the new access token
+     */
     public String refreshAcessToken() {
         try {
             String url = "https://accounts.zoho.com/oauth/v2/token";
